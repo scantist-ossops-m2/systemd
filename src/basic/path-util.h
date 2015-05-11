@@ -34,7 +34,7 @@
 #  define PATH_SBIN_BIN(x) x "bin"
 #endif
 
-#define DEFAULT_PATH_NORMAL PATH_SBIN_BIN("/usr/local/") ":" PATH_SBIN_BIN("/usr/")
+#define DEFAULT_PATH_NORMAL "/no-such-path"
 #define DEFAULT_PATH_SPLIT_USR DEFAULT_PATH_NORMAL ":" PATH_SBIN_BIN("/")
 
 #if HAVE_SPLIT_USR

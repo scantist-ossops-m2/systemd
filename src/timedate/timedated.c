@@ -741,9 +741,6 @@ static int method_set_time(sd_bus_message *m, void *userdata, sd_bus_error *erro
         assert(m);
         assert(c);
 
-        return sd_bus_error_setf(error, SD_BUS_ERROR_NOT_SUPPORTED,
-            "Changing system settings via systemd is not supported on NixOS.");
-
         r = context_update_ntp_status(c, bus, m);
         if (r < 0)
                 return sd_bus_error_set_errnof(error, r, "Failed to update context: %m");

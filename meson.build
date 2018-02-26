@@ -145,6 +145,9 @@ udevhwdbdir = join_paths(udevlibexecdir, 'hwdb.d')
 catalogdir = join_paths(prefixdir, 'lib/systemd/catalog')
 kernelinstalldir = join_paths(prefixdir, 'lib/kernel/install.d')
 factorydir = join_paths(datadir, 'factory')
+factoryconfdir = join_paths(datadir, 'factory/etc')
+factorypkgconfdir = join_paths(datadir, 'factory/etc/systemd')
+factoryxinitrcdir = join_paths(datadir, 'factory/etc/X11/xinit/xinitrc.d')
 bootlibdir = join_paths(prefixdir, 'lib/systemd/boot/efi')
 testsdir = join_paths(prefixdir, 'lib/systemd/tests')
 systemdstatedir = join_paths(localstatedir, 'lib/systemd')
@@ -2338,7 +2341,7 @@ if conf.get('ENABLE_BINFMT') == 1
         meson.add_install_script('sh', '-c',
                                  mkdir_p.format(binfmtdir))
         meson.add_install_script('sh', '-c',
-                                 mkdir_p.format(join_paths(sysconfdir, 'binfmt.d')))
+                                 mkdir_p.format(join_paths(factoryconfdir, 'binfmt.d')))
 endif
 
 if conf.get('ENABLE_VCONSOLE') == 1
@@ -2424,7 +2427,7 @@ executable('systemd-sleep',
            install_dir : rootlibexecdir)
 
 install_data('src/sleep/sleep.conf',
-             install_dir : pkgsysconfdir)
+             install_dir : factorypkgconfdir)
 
 exe = executable('systemd-sysctl',
                  'src/sysctl/sysctl.c',
@@ -2735,7 +2738,7 @@ if conf.get('HAVE_KMOD') == 1
         meson.add_install_script('sh', '-c',
                                  mkdir_p.format(modulesloaddir))
         meson.add_install_script('sh', '-c',
-                                 mkdir_p.format(join_paths(sysconfdir, 'modules-load.d')))
+                                 mkdir_p.format(join_paths(factoryconfdir, 'modules-load.d')))
 endif
 
 exe = executable('systemd-nspawn',
@@ -2957,7 +2960,7 @@ install_subdir('factory/etc',
                install_dir : factorydir)
 
 install_data('xorg/50-systemd-user.sh',
-             install_dir : xinitrcdir)
+             install_dir : factoryxinitrcdir)
 install_data('modprobe.d/systemd.conf',
              install_dir : modprobedir)
 install_data('LICENSE.GPL2',

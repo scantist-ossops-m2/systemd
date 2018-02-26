@@ -109,4 +109,4 @@ if conf.get('HAVE_QRENCODE') == 1
 endif
 
 install_data('journald.conf',
-             install_dir : pkgsysconfdir)
+             install_dir : factorypkgconfdir)

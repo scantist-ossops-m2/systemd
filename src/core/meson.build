@@ -177,7 +177,7 @@ libcore = static_library(
 systemd_sources = files('main.c')
 
 in_files = [['macros.systemd',   rpmmacrosdir],
-            ['system.conf',      pkgsysconfdir],
+            ['system.conf',      factorypkgconfdir],
             ['systemd.pc',       pkgconfigdatadir],
             ['triggers.systemd', '']]
 
@@ -205,7 +205,7 @@ install_data(policy,
              install_dir : polkitpolicydir)
 
 install_data('user.conf',
-             install_dir : pkgsysconfdir)
+             install_dir : factorypkgconfdir)
 
 meson.add_install_script('sh', '-c', mkdir_p.format(systemshutdowndir))
 meson.add_install_script('sh', '-c', mkdir_p.format(systemsleepdir))
@@ -213,10 +213,10 @@ meson.add_install_script('sh', '-c', mkdir_p.format(systemgeneratordir))
 meson.add_install_script('sh', '-c', mkdir_p.format(usergeneratordir))
 
 meson.add_install_script('sh', '-c',
-                         mkdir_p.format(join_paths(pkgsysconfdir, 'system/multi-user.target.wants')))
+                         mkdir_p.format(join_paths(factorypkgconfdir, 'system/multi-user.target.wants')))
 meson.add_install_script('sh', '-c',
-                         mkdir_p.format(join_paths(pkgsysconfdir, 'system/getty.target.wants')))
+                         mkdir_p.format(join_paths(factorypkgconfdir, 'system/getty.target.wants')))
 meson.add_install_script('sh', '-c',
-                         mkdir_p.format(join_paths(pkgsysconfdir, 'user')))
+                         mkdir_p.format(join_paths(factorypkgconfdir, 'user')))
 meson.add_install_script('sh', '-c',
-                         mkdir_p.format(join_paths(sysconfdir, 'xdg/systemd')))
+                         mkdir_p.format(join_paths(factoryconfdir, 'xdg/systemd')))

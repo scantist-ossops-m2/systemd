@@ -66,7 +66,7 @@ if conf.get('ENABLE_LOGIND') == 1
                 output : 'logind.conf',
                 configuration : substs)
         install_data(logind_conf,
-                     install_dir : pkgsysconfdir)
+                     install_dir : factorypkgconfdir)
 
         pam_systemd_sym = 'src/login/pam_systemd.sym'
         pam_systemd_c = files('pam_systemd.c')

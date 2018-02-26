@@ -29,7 +29,7 @@ endif
 coredumpctl_sources = files('coredumpctl.c')
 
 install_data('coredump.conf',
-             install_dir : pkgsysconfdir)
+             install_dir : factorypkgconfdir)
 
 tests += [
         [['src/coredump/test-coredump-vacuum.c',

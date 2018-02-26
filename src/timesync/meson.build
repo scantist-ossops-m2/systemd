@@ -39,7 +39,7 @@ if conf.get('ENABLE_TIMESYNCD') == 1
                 output : 'timesyncd.conf',
                 configuration : substs)
         install_data(timesyncd_conf,
-                     install_dir : pkgsysconfdir)
+                     install_dir : factorypkgconfdir)
 endif
 
 ############################################################

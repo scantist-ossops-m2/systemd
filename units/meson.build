@@ -48,7 +48,7 @@ units = [
         ['local-fs.target',                     ''],
         ['machine.slice',                       'ENABLE_MACHINED'],
         ['machines.target',                     'ENABLE_MACHINED',
-         join_paths(pkgsysconfdir, 'system/multi-user.target.wants/')],
+         join_paths(factorypkgconfdir, 'system/multi-user.target.wants/')],
         ['multi-user.target',                   '',
          'runlevel2.target runlevel3.target runlevel4.target'],
         ['network-online.target',               ''],
@@ -66,10 +66,10 @@ units = [
         ['reboot.target',                       '',
          'runlevel6.target ctrl-alt-del.target'],
         ['remote-cryptsetup.target',            'HAVE_LIBCRYPTSETUP',
-         join_paths(pkgsysconfdir, 'system/multi-user.target.wants/')],
+         join_paths(factorypkgconfdir, 'system/multi-user.target.wants/')],
         ['remote-fs-pre.target',                ''],
         ['remote-fs.target',                    '',
-         join_paths(pkgsysconfdir, 'system/multi-user.target.wants/')],
+         join_paths(factorypkgconfdir, 'system/multi-user.target.wants/')],
         ['rescue.target',                       '',
          'runlevel1.target'],
         ['rpcbind.target',                      ''],
@@ -109,7 +109,7 @@ units = [
         ['systemd-journald.socket',             '',
          'sockets.target.wants/'],
         ['systemd-networkd.socket',             'ENABLE_NETWORKD',
-         join_paths(pkgsysconfdir, 'system/sockets.target.wants/')],
+         join_paths(factorypkgconfdir, 'system/sockets.target.wants/')],
         ['systemd-rfkill.socket',               'ENABLE_RFKILL'],
         ['systemd-tmpfiles-clean.timer',        '',
          'timers.target.wants/'],
@@ -184,10 +184,10 @@ in_units = [
         ['systemd-modules-load.service',         'HAVE_KMOD',
          'sysinit.target.wants/'],
         ['systemd-networkd.service',             'ENABLE_NETWORKD',
-         join_paths(pkgsysconfdir, 'system/dbus-org.freedesktop.network1.service') + ' ' +
-         join_paths(pkgsysconfdir, 'system/multi-user.target.wants/')],
+         join_paths(factorypkgconfdir, 'system/dbus-org.freedesktop.network1.service') + ' ' +
+         join_paths(factorypkgconfdir, 'system/multi-user.target.wants/')],
         ['systemd-networkd-wait-online.service', 'ENABLE_NETWORKD',
-         join_paths(pkgsysconfdir, 'system/network-online.target.wants/')],
+         join_paths(factorypkgconfdir, 'system/network-online.target.wants/')],
         ['systemd-nspawn@.service',              ''],
         ['systemd-poweroff.service',             ''],
         ['systemd-quotacheck.service',           'ENABLE_QUOTACHECK'],
@@ -197,8 +197,8 @@ in_units = [
         ['systemd-remount-fs.service',           '',
          'local-fs.target.wants/'],
         ['systemd-resolved.service',             'ENABLE_RESOLVE',
-         join_paths(pkgsysconfdir, 'system/dbus-org.freedesktop.resolve1.service') + ' ' +
-         join_paths(pkgsysconfdir, 'system/multi-user.target.wants/')],
+         join_paths(factorypkgconfdir, 'system/dbus-org.freedesktop.resolve1.service') + ' ' +
+         join_paths(factorypkgconfdir, 'system/multi-user.target.wants/')],
         ['systemd-rfkill.service',               'ENABLE_RFKILL'],
         ['systemd-suspend.service',              ''],
         ['systemd-sysctl.service',               '',
@@ -208,7 +208,7 @@ in_units = [
         ['systemd-timedated.service',            'ENABLE_TIMEDATED',
          'dbus-org.freedesktop.timedate1.service'],
         ['systemd-timesyncd.service',            'ENABLE_TIMESYNCD',
-         join_paths(pkgsysconfdir, 'system/sysinit.target.wants/')],
+         join_paths(factorypkgconfdir, 'system/sysinit.target.wants/')],
         ['systemd-tmpfiles-clean.service',       'ENABLE_TMPFILES'],
         ['systemd-tmpfiles-setup-dev.service',   'ENABLE_TMPFILES',
          'sysinit.target.wants/'],
@@ -235,7 +235,7 @@ in_units = [
 m4_units = [
         ['getty@.service',                     '',
          'autovt@.service ' +
-         join_paths(pkgsysconfdir, 'system/getty.target.wants/getty@tty1.service')],
+         join_paths(factorypkgconfdir, 'system/getty.target.wants/getty@tty1.service')],
         ['serial-getty@.service',              ''],
 ]
 
@@ -333,7 +333,7 @@ endforeach
 
 meson.add_install_script(meson_make_symlink,
                          join_paths(pkgsysconfdir, 'user'),
-                         join_paths(sysconfdir, 'xdg/systemd/user'))
+                         join_paths(factorypkgconfdir, 'xdg/systemd/user'))
 meson.add_install_script(meson_make_symlink,
                          join_paths(dbussystemservicedir, 'org.freedesktop.systemd1.service'),
                          join_paths(dbussessionservicedir, 'org.freedesktop.systemd1.service'))

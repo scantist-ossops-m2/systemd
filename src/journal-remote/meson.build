@@ -44,7 +44,7 @@ if conf.get('ENABLE_REMOTE') ==1 and conf.get('HAVE_LIBCURL') == 1
                 output : 'journal-upload.conf',
                 configuration : substs)
         install_data(journal_upload_conf,
-                     install_dir : pkgsysconfdir)
+                     install_dir : factorypkgconfdir)
 endif
 
 if conf.get('ENABLE_REMOTE') == 1 and conf.get('HAVE_MICROHTTPD') == 1
@@ -53,7 +53,7 @@ if conf.get('ENABLE_REMOTE') == 1 and conf.get('HAVE_MICROHTTPD') == 1
                 output : 'journal-remote.conf',
                 configuration : substs)
         install_data(journal_remote_conf,
-                     install_dir : pkgsysconfdir)
+                     install_dir : factorypkgconfdir)
 
         install_data('browse.html',
                      install_dir : join_paths(pkgdatadir, 'gatewayd'))

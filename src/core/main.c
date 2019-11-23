@@ -538,7 +538,6 @@ DEFINE_SETTER(config_parse_level2, log_set_max_level_from_string, "log level");
 DEFINE_SETTER(config_parse_target, log_set_target_from_string, "target");
 DEFINE_SETTER(config_parse_color, log_show_color_from_string, "color" );
 DEFINE_SETTER(config_parse_location, log_show_location_from_string, "location");
-DEFINE_SETTER(config_parse_status_unit_format, status_unit_format_from_string, "value");
 
 static int parse_config_file(void) {
 
@@ -2134,7 +2133,7 @@ static void reset_arguments(void) {
         arg_default_blockio_accounting = false;
         arg_default_memory_accounting = MEMORY_ACCOUNTING_DEFAULT;
         arg_default_tasks_accounting = true;
-        arg_default_tasks_max = UINT64_MAX;
+        arg_default_tasks_max = system_tasks_max_scale(DEFAULT_TASKS_MAX_PERCENTAGE, 100U);
         arg_machine_id = (sd_id128_t) {};
         arg_cad_burst_action = EMERGENCY_ACTION_REBOOT_FORCE;
         arg_default_oom_policy = OOM_STOP;
@@ -2149,8 +2148,6 @@ static int parse_configuration(const struct rlimit *saved_rlimit_nofile,
 
         assert(saved_rlimit_nofile);
         assert(saved_rlimit_memlock);
-
-        arg_default_tasks_max = system_tasks_max_scale(DEFAULT_TASKS_MAX_PERCENTAGE, 100U);
 
         /* Assign configuration defaults */
         reset_arguments();

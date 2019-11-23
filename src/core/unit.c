@@ -2789,7 +2789,7 @@ int unit_enqueue_rewatch_pids(Unit *u) {
 
                 r = sd_event_source_set_priority(s, SD_EVENT_PRIORITY_IDLE);
                 if (r < 0)
-                        return log_error_errno(r, "Failed to adjust priority of event source for tidying watched PIDs: m");
+                        return log_error_errno(r, "Failed to adjust priority of event source for tidying watched PIDs: %m");
 
                 (void) sd_event_source_set_description(s, "tidy-watch-pids");
 
@@ -3901,6 +3901,7 @@ int unit_add_node_dependency(Unit *u, const char *what, bool wants, UnitDependen
 int unit_coldplug(Unit *u) {
         int r = 0, q;
         char **i;
+        Job *uj;
 
         assert(u);
 
@@ -3923,8 +3924,9 @@ int unit_coldplug(Unit *u) {
                         r = q;
         }
 
-        if (u->job) {
-                q = job_coldplug(u->job);
+        uj = u->job ?: u->nop_job;
+        if (uj) {
+                q = job_coldplug(uj);
                 if (q < 0 && r >= 0)
                         r = q;
         }

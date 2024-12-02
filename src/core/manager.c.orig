@@ -1659,6 +1659,10 @@ int manager_load_unit_prepare(
                 log_debug("Got zero-length notification message. Ignoring.");
                 return 0;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         ret = unit_new(m, unit_vtable[t]->object_size);
         if (!ret)

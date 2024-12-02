@@ -851,7 +851,7 @@ static int fd_set_perms(Item *i, int fd, const struct stat *st) {
         }
 
 shortcut:
-        return label_fix(path, 0);
+        return label_fix(path, false, false);
 }
 
 static int path_set_perms(Item *i, const char *path) {

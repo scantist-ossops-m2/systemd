@@ -1502,7 +1502,11 @@ static void manager_invoke_notify_message(Manager *m, Unit *u, pid_t pid, const 
         assert(m);
         assert(u);
         assert(buf);
-        assert(n > 0);
+
+        if(n <= 0) {
+            log_unit_debug(u, "Got a zero-length notification message. Ignoring");
+            return;
+        }
 
         tags = strv_split(buf, "\n\r");
         if (!tags) {
@@ -1554,6 +1558,11 @@ static int manager_dispatch_notify_fd(sd_event_source *source, int fd, uint32_t 
         }
 
         n = recvmsg(m->notify_fd, &msghdr, MSG_DONTWAIT|MSG_CMSG_CLOEXEC);
+        if (n == 0) {
+            log_warning("Got zero-length notification message. Ignoring.");
+            return 0;
+        }
+
         if (n < 0) {
                 if (errno == EAGAIN || errno == EINTR)
                         return 0;

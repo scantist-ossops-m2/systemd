@@ -1756,10 +1756,6 @@ int manager_loop(Manager *m) {
                 if (r < 0)
                         return r;
         }
-        if (n == 0) {
-            log_debug("Got zero-length notification message. Ignoring.");
-            return 0;
-        }
 
         return m->exit_code;
 }

@@ -1553,6 +1553,10 @@ static unsigned manager_dispatch_dbus_queue(Manager *m) {
 
                 bus_manager_send_reloading(m, false);
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         if (m->queued_message)
                 bus_send_queued_message(m);

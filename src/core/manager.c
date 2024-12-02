@@ -1665,6 +1665,10 @@ static int process_event(Manager *m, struct epoll_event *ev) {
 
                 break;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         case WATCH_JOBS_IN_PROGRESS: {
                 uint64_t v;

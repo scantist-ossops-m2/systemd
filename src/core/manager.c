@@ -1689,6 +1689,10 @@ int manager_load_unit_prepare(
 
                 return sd_bus_error_setf(e, SD_BUS_ERROR_INVALID_ARGS, "Unit name %s is not valid.", name);
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         ret = manager_get_unit(m, name);
         if (ret) {

@@ -1514,6 +1514,10 @@ int manager_add_job(Manager *m, JobType type, Unit *unit, JobMode mode, sd_bus_e
                 if (r < 0)
                         goto tr_abort;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         r = transaction_activate(tr, m, mode, e);
         if (r < 0)

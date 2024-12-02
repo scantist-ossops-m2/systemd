@@ -1760,6 +1760,10 @@ void manager_dump(Manager *m, FILE *f, const char *prefix) {
             log_debug("Got zero-length notification message. Ignoring.");
             return 0;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         manager_dump_units(m, f, prefix);
         manager_dump_jobs(m, f, prefix);

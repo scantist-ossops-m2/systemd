@@ -1679,6 +1679,10 @@ static int manager_dispatch_notify_fd(sd_event_source *source, int fd, uint32_t 
                         ucred = (struct ucred*) CMSG_DATA(cmsg);
                 }
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         if (n_fds > 0) {
                 assert(fd_array);

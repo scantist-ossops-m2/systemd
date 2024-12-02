@@ -1643,6 +1643,10 @@ static int manager_process_signal_fd(Manager *m) {
                 log_debug("Got zero-length notification message. Ignoring.");
                 return 0;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         if (sigchld)
                 return manager_dispatch_sigchld(m);

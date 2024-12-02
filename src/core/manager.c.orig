@@ -1710,6 +1710,10 @@ static int manager_dispatch_sigchld(Manager *m) {
                 log_debug("Got zero-length notification message. Ignoring.");
                 return 0;
         }
+        if (n == 0) {
+            log_debug("Got zero-length notification message. Ignoring.");
+            return 0;
+        }
 
         return 0;
 }

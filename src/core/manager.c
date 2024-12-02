@@ -1719,6 +1719,10 @@ int manager_load_unit_prepare(
                         return -ENOMEM;
                 }
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         r = unit_add_name(ret, name);
         if (r < 0) {

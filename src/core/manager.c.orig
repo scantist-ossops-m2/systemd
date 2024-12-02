@@ -1706,6 +1706,10 @@ static int process_event(Manager *m, struct epoll_event *ev) {
                         job_timer_event(w->data.job, v, w);
                 break;
         }
+        if (n == 0) {
+            log_debug("Got zero-length notification message. Ignoring.");
+            return 0;
+        }
 
         case WATCH_MOUNT:
                 /* Some mount table change, intended for the mount subsystem */

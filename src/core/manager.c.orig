@@ -1665,6 +1665,10 @@ int manager_load_unit_prepare(
                 unit_free(ret);
                 return r;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         unit_add_to_load_queue(ret);
         unit_add_to_dbus_queue(ret);

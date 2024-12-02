@@ -1514,6 +1514,10 @@ static int manager_dispatch_notify_fd(sd_event_source *source, int fd, uint32_t 
                 log_warning("Got unexpected poll event for notify fd.");
                 return 0;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         for (;;) {
                 _cleanup_fdset_free_ FDSet *fds = NULL;

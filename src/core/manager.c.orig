@@ -1719,6 +1719,10 @@ static int manager_dispatch_notify_fd(sd_event_source *source, int fd, uint32_t 
                         return 0;
                 }
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         if (!ucred || ucred->pid <= 0) {
                 log_warning("Received notify message without valid credentials. Ignoring.");

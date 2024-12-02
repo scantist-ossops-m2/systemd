@@ -1683,6 +1683,10 @@ static int process_event(Manager *m, struct epoll_event *ev) {
                 manager_print_jobs_in_progress(m);
                 break;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         default:
                 log_error("event type=%i", w->type);

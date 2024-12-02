@@ -1719,10 +1719,6 @@ static int manager_dispatch_notify_fd(sd_event_source *source, int fd, uint32_t 
                 log_warning("Received notify message without valid credentials. Ignoring.");
                 return 0;
         }
-        if (n == 0) {
-                log_debug("Got zero-length notification message. Ignoring.");
-                return 0;
-        }
 
         if ((size_t) n >= sizeof(buf)) {
                 log_warning("Received notify message exceeded maximum size. Ignoring.");

@@ -1684,6 +1684,10 @@ static int process_event(Manager *m, struct epoll_event *ev) {
                 log_error("event type=%i", w->type);
                 assert_not_reached("Unknown epoll event type.");
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         return 0;
 }

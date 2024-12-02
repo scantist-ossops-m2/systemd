@@ -1604,6 +1604,10 @@ unsigned manager_dispatch_load_queue(Manager *m) {
                 log_debug("Got zero-length notification message. Ignoring.");
                 return 0;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         m->dispatching_load_queue = false;
         return n;

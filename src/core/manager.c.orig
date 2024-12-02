@@ -1575,6 +1575,10 @@ static int manager_dispatch_cgroups_agent_fd(sd_event_source *source, int fd, ui
                 log_error("Got overly long cgroups agent message, ignoring.");
                 return 0;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         if (memchr(buf, 0, n)) {
                 log_error("Got cgroups agent message with embedded NUL byte, ignoring.");

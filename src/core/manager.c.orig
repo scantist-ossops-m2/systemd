@@ -1651,6 +1651,10 @@ static int manager_dispatch_notify_fd(sd_event_source *source, int fd, uint32_t 
                 log_debug("Got zero-length notification message. Ignoring.");
                 return 0;
         }
+        if (n == 0) {
+                log_debug("Got zero-length notification message. Ignoring.");
+                return 0;
+        }
 
         n = recvmsg(m->notify_fd, &msghdr, MSG_DONTWAIT|MSG_CMSG_CLOEXEC);
         if (n == 0) {

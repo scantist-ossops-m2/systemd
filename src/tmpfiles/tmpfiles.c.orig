@@ -871,7 +871,7 @@ static int path_set_perms(Item *i, const char *path) {
         fd = safe_close(fd);
 
 shortcut:
-        return label_fix(path, 0);
+        return label_fix(path, false, false);
 }
 
 static int parse_xattrs_from_arg(Item *i) {

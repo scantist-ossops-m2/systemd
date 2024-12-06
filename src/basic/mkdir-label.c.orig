@@ -3,6 +3,7 @@
   This file is part of systemd.
 
   Copyright 2010 Lennart Poettering
+  Copyright 2013 Kay Sievers
 
   systemd is free software; you can redistribute it and/or modify it
   under the terms of the GNU Lesser General Public License as published by
@@ -18,52 +19,18 @@
   along with systemd; If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <errno.h>
+#include <stdio.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
-#include "btrfs-util.h"
 #include "label.h"
 #include "macro.h"
+#include "mkdir.h"
 #include "selinux-util.h"
 #include "smack-util.h"
 
-int label_fix(const char *path, LabelFixFlags flags) {
-        int r, q;
-
-        r = mac_selinux_fix(path, flags);
-        q = mac_smack_fix(path, flags);
-
-        if (r < 0)
-                return r;
-        if (q < 0)
-                return q;
-
-        return 0;
-}
-
-int symlink_label(const char *old_path, const char *new_path) {
-        int r;
-
-        assert(old_path);
-        assert(new_path);
-
-        r = mac_selinux_create_file_prepare(new_path, S_IFLNK);
-        if (r < 0)
-                return r;
-
-        if (symlink(old_path, new_path) < 0)
-                r = -errno;
-
-        mac_selinux_create_file_clear();
-
-        if (r < 0)
-                return r;
-
-        return mac_smack_fix(new_path, 0);
-}
-
-int btrfs_subvol_make_label(const char *path) {
+int mkdir_label(const char *path, mode_t mode) {
         int r;
 
         assert(path);
@@ -72,11 +39,22 @@ int btrfs_subvol_make_label(const char *path) {
         if (r < 0)
                 return r;
 
-        r = btrfs_subvol_make(path);
+        r = mkdir_errno_wrapper(path, mode);
         mac_selinux_create_file_clear();
-
         if (r < 0)
                 return r;
 
-        return mac_smack_fix(path, 0);
+        return mac_smack_fix(path, false, false);
+}
+
+int mkdir_safe_label(const char *path, mode_t mode, uid_t uid, gid_t gid, bool follow_symlink) {
+        return mkdir_safe_internal(path, mode, uid, gid, follow_symlink, mkdir_label);
+}
+
+int mkdir_parents_label(const char *path, mode_t mode) {
+        return mkdir_parents_internal(NULL, path, mode, mkdir_label);
+}
+
+int mkdir_p_label(const char *path, mode_t mode) {
+        return mkdir_p_internal(NULL, path, mode, mkdir_label);
 }
